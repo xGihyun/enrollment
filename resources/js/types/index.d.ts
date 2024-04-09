@@ -20,6 +20,18 @@ export type User = {
   role: Role;
 };
 
+export type Enrollment = {
+  id: number;
+  enrolled_at: Date;
+  year: string;
+  level: string;
+  section: string;
+  tuition_plan: string;
+  status: "pending" | "done";
+  student_id: number;
+  payment_receipt_url: string;
+};
+
 export type Register = {
   first_name: string;
   middle_name?: string;
