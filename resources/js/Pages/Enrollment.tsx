@@ -11,7 +11,7 @@ export default function Enrollment({ auth }: PageProps) {
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
 
-    post(route("enrollment.insert"));
+    post(route("enrollments.insert"));
   };
 
   return (

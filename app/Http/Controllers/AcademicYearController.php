@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+use Inertia\Response;
+
+class AcademicYearController extends Controller
+{
+  public function getAll(): Response {
+    $academicYears = DB::select(
+      "
+      SELECT ay.*, COUNT(e.id) AS student_count
+      FROM academic_years ay
+      LEFT JOIN enrollments e ON ay.id = e.academic_year_id
+      GROUP BY ay.id, ay.year, ay.start_at, ay.end_at, ay.status
+      ORDER BY ay.start_at DESC
+      LIMIT 25
+      "
+    );
+
+    return Inertia::render('Admin/Dashboard', [
+        'academicYears' => $academicYears
+    ]);
+  }
+
+  public function insert(Request $request): void {
+    DB::insert(
+      "
+      INSERT INTO academic_years (year, start_at, end_at)
+      VALUES (?, ?, ?)
+      ",
+      [$request->input('year'), $request->input('start_at'), $request->input('end_at')]);
+  }
+
+  public function update(Request $request): void {
+    DB::update(
+      "
+      UPDATE academic_years
+      SET
+        year = ?,
+        start_at = ?,
+        end_at = ?,
+        status = ?
+      WHERE id = ?
+      ",
+      [$request->input('year'), $request->input('start_at'), $request->input('end_at'), $request->input('status'), $request->input('id')]);
+  }
+}

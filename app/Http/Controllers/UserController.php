@@ -19,7 +19,6 @@ class UserController extends Controller
         return Inertia::render('Users', [
             'users' => $users
         ]);
-        // return response()->json($users);
     }
 
     /**

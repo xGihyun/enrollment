@@ -32,6 +32,25 @@ export type Enrollment = {
   payment_receipt_url: string;
 };
 
+export type AcademicYear = {
+  id: number;
+  year: string;
+  start_at: Date;
+  end_at: Date;
+  status: "upcoming" | "open" | "ongoing" | "finished";
+  student_count: number;
+};
+
+export type Route = {
+  name: string;
+  path: string;
+  icon?: JSX.Element;
+};
+
+// export type AdminEnrollment = AcademicYear & {
+//   student_count: number;
+// };
+
 export type Register = {
   first_name: string;
   middle_name?: string;

@@ -1,6 +1,25 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import { Enrollment, PageProps } from "@/types";
+import { Badge } from "@/Components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/Components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ui/table";
+import { Button } from "@/Components/ui/button";
+import { IoSchool } from "react-icons/io5";
+import { IoMdCheckmark } from "react-icons/io";
 
 export default function Dashboard({ auth }: PageProps) {
   return (
@@ -28,41 +47,18 @@ export default function Dashboard({ auth }: PageProps) {
   );
 }
 
-import { Badge } from "@/Components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/Components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/Components/ui/table";
-import { Button } from "@/Components/ui/button";
-import { IoSchool } from "react-icons/io5";
-import { IoMdCheckmark } from "react-icons/io";
-
 function EnrollmentTable() {
-  const academicYears = [
+  const academicYears: Enrollment[] = [
     {
-      year: "2022 - 2023",
+      id: 1,
+      year: "2022-2023",
       level: "Grade 12",
       section: "St. Agatha",
-      tuitionPlan: "Plan A",
-      enrollmentStatus: "pending",
-    },
-    {
-      year: "2021 - 2022",
-      level: "Grade 11",
-      section: "St. Barbara",
-      tuitionPlan: "Plan B",
-      enrollmentStatus: "done",
+      tuition_plan: "A",
+      status: "pending",
+      student_id: 1,
+      enrolled_at: new Date(),
+      payment_receipt_url: "url",
     },
   ];
 
@@ -86,15 +82,17 @@ function EnrollmentTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {academicYears.map((data) => {
+            {academicYears.map((enrollment) => {
               return (
                 <TableRow className="first:bg-accent">
-                  <TableCell className="font-medium">{data.year}</TableCell>
-                  <TableCell>{data.level}</TableCell>
-                  <TableCell>{data.section}</TableCell>
-                  <TableCell>{data.tuitionPlan}</TableCell>
+                  <TableCell className="font-medium">
+                    {enrollment.year}
+                  </TableCell>
+                  <TableCell>{enrollment.level}</TableCell>
+                  <TableCell>{enrollment.section}</TableCell>
+                  <TableCell>{enrollment.tuition_plan}</TableCell>
                   <TableCell>
-                    {data.enrollmentStatus === "pending" ? (
+                    {enrollment.status === "pending" ? (
                       <Button
                         variant="secondary"
                         size="sm"

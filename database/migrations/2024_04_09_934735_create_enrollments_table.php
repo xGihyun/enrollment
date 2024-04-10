@@ -12,16 +12,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enrollments', function (Blueprint $table) {
+    Schema::create('enrollments', function (Blueprint $table) {
+            $table->index('student_id');
+
             $table->id()->primary();
             $table->timestamp('enrolled_at')->default(DB::raw('current_timestamp()'));
-            $table->string('year', 11);
             $table->string('level');
             $table->string('section');
             $table->enum('tuition_plan', ['a', 'b', 'c', 'd']);
             $table->enum('status', ['pending', 'done'])->default('pending');
-            $table->foreignId('student_id')->references('id')->on('users');
             $table->string('payment_receipt_url');
+            $table->foreignId('student_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
         });
     }
 

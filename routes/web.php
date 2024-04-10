@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -29,9 +30,16 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-  Route::get('/enrollment', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
-  Route::post('/enrollment', [EnrollmentController::class, 'insert'])->name('enrollment.insert');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/enrollments', [EnrollmentController::class, 'enroll'])->name('enrollments.enroll');
+    Route::post('/enrollments', [EnrollmentController::class, 'insert'])->name('enrollments.insert');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+  Route::get('/admin/dashboard', [AcademicYearController::class, 'getAll'])->name("admin.dashboard");
+  Route::post('/academic-years', [AcademicYearController::class, 'insert']);
+  Route::patch('/academic-years', [AcademicYearController::class, 'update']);
 });
 
 require __DIR__.'/auth.php';

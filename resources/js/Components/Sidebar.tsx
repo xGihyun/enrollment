@@ -1,4 +1,4 @@
-import { User } from "@/types";
+import { Route, User } from "@/types";
 import { Link } from "@inertiajs/react";
 import { IconContext } from "react-icons";
 import { MdSpaceDashboard } from "react-icons/md";
@@ -11,23 +11,33 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { FaUsers } from "react-icons/fa";
 // import Dropdown from "./Dropdown";
 
-const ROUTES = [
+const ROUTES: Route[] = [
   {
     name: "Dashboard",
     path: "/dashboard",
     icon: <MdSpaceDashboard />,
   },
-  // {
-  //   name: "History",
-  //   path: "/history",
-  //   icon: <MdSpaceDashboard />,
-  // },
+];
+
+const ADMIN_ROUTES: Route[] = [
+  {
+    name: "Dashboard",
+    path: "/admin/dashboard",
+    icon: <MdSpaceDashboard />,
+  },
+  {
+    name: "Users",
+    path: "/users",
+    icon: <FaUsers />,
+  },
 ];
 
 export default function Sidebar({ user }: { user: User }) {
   const name = `${user.first_name} ${user.last_name}`;
+  const routes = user.role === "admin" ? ADMIN_ROUTES : ROUTES;
 
   return (
     <aside className="fixed inset-y-0 left-0 h-full w-60 p-4 bg-white border-r text-black border-gray-200 flex flex-col">
@@ -40,7 +50,7 @@ export default function Sidebar({ user }: { user: User }) {
       </div>
 
       <nav className="flex flex-col gap-2">
-        {ROUTES.map((route) => {
+        {routes.map((route) => {
           const isCurrentPath = window.location.pathname === route.path;
 
           return (
