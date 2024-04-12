@@ -38,7 +38,6 @@ export type AcademicYear = {
   start_at: Date;
   end_at: Date;
   status: "upcoming" | "open" | "ongoing" | "finished";
-  student_count: number;
 };
 
 export type Route = {

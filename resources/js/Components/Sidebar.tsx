@@ -30,8 +30,12 @@ const ADMIN_ROUTES: Route[] = [
   },
   {
     name: "Users",
-    path: "/users",
+    path: "/admin/users",
     icon: <FaUsers />,
+  },
+  {
+    name: "Sections",
+    path: "/admin/sections",
   },
 ];
 

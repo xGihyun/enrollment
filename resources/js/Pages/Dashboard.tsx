@@ -21,7 +21,10 @@ import { Button } from "@/Components/ui/button";
 import { IoSchool } from "react-icons/io5";
 import { IoMdCheckmark } from "react-icons/io";
 
-export default function Dashboard({ auth }: PageProps) {
+export default function Dashboard({
+  auth,
+  academicYears,
+}: PageProps<{ academicYears: any[] }>) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Dashboard" />
@@ -41,26 +44,26 @@ export default function Dashboard({ auth }: PageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <EnrollmentTable />
+        <EnrollmentTable academicYears={academicYears} />
       </div>
     </AuthenticatedLayout>
   );
 }
 
-function EnrollmentTable() {
-  const academicYears: Enrollment[] = [
-    {
-      id: 1,
-      year: "2022-2023",
-      level: "Grade 12",
-      section: "St. Agatha",
-      tuition_plan: "A",
-      status: "pending",
-      student_id: 1,
-      enrolled_at: new Date(),
-      payment_receipt_url: "url",
-    },
-  ];
+function EnrollmentTable({ academicYears }: { academicYears: any[] }) {
+  // const academicYears: Enrollment[] = [
+  //   {
+  //     id: 1,
+  //     year: "2022-2023",
+  //     level: "Grade 12",
+  //     section: "St. Agatha",
+  //     tuition_plan: "A",
+  //     status: "pending",
+  //     student_id: 1,
+  //     enrolled_at: new Date(),
+  //     payment_receipt_url: "url",
+  //   },
+  // ];
 
   return (
     <Card>
@@ -82,17 +85,17 @@ function EnrollmentTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {academicYears.map((enrollment) => {
+            {academicYears.map((academicYear) => {
               return (
-                <TableRow className="first:bg-accent">
+                <TableRow className="first:bg-accent" key={academicYear.id}>
                   <TableCell className="font-medium">
-                    {enrollment.year}
+                    {academicYear.year}
                   </TableCell>
-                  <TableCell>{enrollment.level}</TableCell>
-                  <TableCell>{enrollment.section}</TableCell>
-                  <TableCell>{enrollment.tuition_plan}</TableCell>
+                  <TableCell>{academicYear.level ?? "---"}</TableCell>
+                  <TableCell>{academicYear.section ?? "---"}</TableCell>
+                  <TableCell>{academicYear.tuition_plan ?? "---"}</TableCell>
                   <TableCell>
-                    {enrollment.status === "pending" ? (
+                    {academicYear.status === "open" ? (
                       <Button
                         variant="secondary"
                         size="sm"

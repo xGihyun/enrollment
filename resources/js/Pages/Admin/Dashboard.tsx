@@ -53,6 +53,12 @@ import { toast } from "sonner";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { academicYearSchema } from "@/schemas";
+import {
+  AcademicYearsTable,
+  NewEnrolleesTable,
+} from "@/Components/Admin/Table";
+import { Badge } from "@/Components/ui/badge";
+import NewEnrollees from "@/Components/Admin/NewEnrollees";
 
 export default function Dashboard({
   auth,
@@ -62,18 +68,47 @@ export default function Dashboard({
     <AuthenticatedLayout user={auth.user}>
       <Head title="Dashboard" />
 
-      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
-        <Card>
-          <CardHeader className="px-7 flex-row items-center justify-between">
-            <div className="space-y-1.5">
-              <CardTitle>Academic Years</CardTitle>
-              <CardDescription>Previous academic years.</CardDescription>
-            </div>
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12 flex w-full gap-2 h-full">
+        <div className="flex flex-col gap-2 flex-[2_2_0%] h-full">
+          <div className="flex gap-2">
+            <Card>
+              <CardHeader>
+                <CardDescription>Students Enrolled</CardDescription>
+                <CardTitle className="text-4xl">100,000</CardTitle>
+              </CardHeader>
+            </Card>
 
-            <DialogForm />
+            <Card>
+              <CardHeader>
+                <CardDescription>Teachers Working</CardDescription>
+                <CardTitle className="text-4xl">687</CardTitle>
+              </CardHeader>
+            </Card>
+          </div>
+
+          <Card>
+            <CardHeader className="px-7 flex-row items-center justify-between">
+              <div className="space-y-1.5">
+                <CardTitle>Academic Years</CardTitle>
+                <CardDescription>Previous academic years.</CardDescription>
+              </div>
+
+              <DialogForm />
+            </CardHeader>
+            <CardContent>
+              <AcademicYearsTable columns={columns} data={academicYears} />
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="flex-1">
+          <CardHeader>
+            <CardTitle>New Enrollees</CardTitle>
+            <CardDescription>Students who recently enrolled.</CardDescription>
           </CardHeader>
           <CardContent>
-            <DataTable columns={columns} data={academicYears} />
+            <NewEnrollees />
+            {/* <NewEnrolleesTable /> */}
           </CardContent>
         </Card>
       </div>
