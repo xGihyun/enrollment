@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { Enrollment, PageProps } from "@/types";
 import { Badge } from "@/Components/ui/badge";
 import {
@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
-import { Button } from "@/Components/ui/button";
+import { Button, buttonVariants } from "@/Components/ui/button";
 import { IoSchool } from "react-icons/io5";
 import { IoMdCheckmark } from "react-icons/io";
 
@@ -95,12 +95,15 @@ function EnrollmentTable({ academicYears }: { academicYears: any[] }) {
                   <TableCell>{academicYear.section ?? "---"}</TableCell>
                   <TableCell>{academicYear.tuition_plan ?? "---"}</TableCell>
                   <TableCell>
-                    {academicYear.status === "open" ? (
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className="bg-green-300 hover:bg-green-400 space-x-1"
-                      >
+                    <Link
+                      href="/enrollments"
+                      className="bg-green-300 hover:bg-green-400 space-x-1 inline-flex h-8 rounded-md px-3 text-xs transition-colors items-center gap-1"
+                    >
+                      <IoSchool />
+                      <span>Enroll</span>
+                    </Link>
+                    {academicYear.status === "pending" ? (
+                      <Button variant="secondary" size="sm">
                         <IoSchool />
                         <span>Enroll</span>
                       </Button>

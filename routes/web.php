@@ -23,7 +23,6 @@ Route::get('/', function () {
   return Inertia::render('Auth/Login');
 });
 
-Route::get('/admin/users', [UserController::class, 'index']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -43,6 +42,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
   Route::patch('/academic-years', [AcademicYearController::class, 'update']);
 
   Route::get('/admin/sections', [SectionsController::class, 'getAll']);
+  Route::get('/admin/users', [UserController::class, 'index']);
 });
 
 require __DIR__.'/auth.php';

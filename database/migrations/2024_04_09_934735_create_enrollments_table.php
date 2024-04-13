@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id()->primary();
             $table->timestamp('enrolled_at')->default(DB::raw('current_timestamp()'));
             $table->string('level');
-            $table->string('section');
+            $table->string('section')->nullable();
             $table->enum('tuition_plan', ['a', 'b', 'c', 'd']);
             $table->enum('status', ['pending', 'done'])->default('pending');
             $table->string('payment_receipt_url');
